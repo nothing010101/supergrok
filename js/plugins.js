@@ -1,44 +1,18 @@
-// plugin.js
+// plugin.js — Basic behavior plugin for SuperGrok
 
-document.addEventListener('DOMContentLoaded', () => {
-  console.log('[plugin.js] Initialized ✅');
+document.addEventListener("DOMContentLoaded", function () { console.log("[plugin.js] SuperGrok plugins initialized ✅");
 
-  // === Toggle terminal panel (jika ada tombol OPEN TERMINAL) ===
-  const openBtn = document.getElementById('open-terminal');
-  const terminal = document.getElementById('terminal');
+// === Menu Toggle (for mobile menu if needed) const menuBtn = document.getElementById("menu-btn"); const mainMenu = document.getElementById("mainmenu");
 
-  if (openBtn && terminal) {
-    openBtn.addEventListener('click', () => {
-      terminal.classList.toggle('active');
-      console.log('Terminal toggled');
-    });
-  }
+if (menuBtn && mainMenu) { menuBtn.addEventListener("click", function () { mainMenu.classList.toggle("menu-opened"); }); }
 
-  // === Enable smooth scroll (jika ada anchor) ===
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-      e.preventDefault();
-      const target = document.querySelector(this.getAttribute('href'));
-      if (target) {
-        target.scrollIntoView({ behavior: 'smooth' });
-      }
-    });
-  });
+// === Back to top === const backToTop = document.getElementById("back-to-top"); window.addEventListener("scroll", function () { if (window.scrollY > 300) { backToTop.classList.add("visible"); } else { backToTop.classList.remove("visible"); } });
 
-  // === Simple animation on scroll ===
-  const animateOnScroll = document.querySelectorAll('.animate-on-scroll');
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      }
-    });
-  });
-  animateOnScroll.forEach(el => observer.observe(el));
+backToTop?.addEventListener("click", function (e) { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); });
 
-  // === Example log for plugin testing
-  const pluginElements = document.querySelectorAll('[data-plugin]');
-  pluginElements.forEach(el => {
-    console.log(`Plugin hook: ${el.dataset.plugin}`);
-  });
-});
+// === Animate on scroll: activate elements with class .wow === const animated = document.querySelectorAll(".wow"); const observer = new IntersectionObserver( entries => { entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add("animated-visible"); } }); }, { threshold: 0.1 } );
+
+animated.forEach(el => observer.observe(el));
+
+// === Jarallax background video fallback const videos = document.querySelectorAll("video.jarallax-img"); videos.forEach(video => { video.play().catch(e => { console.warn("[plugin.js] Video autoplay failed, user interaction required."); }); }); });
+
